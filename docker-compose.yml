@@ -1,0 +1,16 @@
+services:
+  target:
+    build: .
+    container_name: php2shell-target
+    ports:
+      - "127.0.0.1:8088:80"
+    # SYS_PTRACE lets gdb attach for diagnostics/calibration (optional).
+    cap_add:
+      - SYS_PTRACE
+    volumes:
+      # php.ini as the main php.ini (overrides the COPY baked into the image).
+      - ./php.ini:/usr/local/etc/php/php.ini:ro
+      # Single-worker prefork MPM, as in the 3em0 reference.
+      - ./apache.conf:/etc/apache2/conf-enabled/zz-php2shell.conf:ro
+      - ./webroot:/var/www/html:ro
+    restart: unless-stopped
