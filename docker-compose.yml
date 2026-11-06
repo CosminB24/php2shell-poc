@@ -1,10 +1,12 @@
+# php2shell educational lab — single-worker prefork, no keep-alive.
+# Bound to 127.0.0.1 only: NEVER expose port 8088 beyond localhost.
 services:
   target:
     build: .
     container_name: php2shell-target
     ports:
       - "127.0.0.1:8088:80"
-    # SYS_PTRACE lets gdb attach for diagnostics/calibration (optional).
+    # SYS_PTRACE lets gdb attach for diagnostics / offset calibration (optional).
     cap_add:
       - SYS_PTRACE
     volumes:
@@ -14,3 +16,9 @@ services:
       - ./apache.conf:/etc/apache2/conf-enabled/zz-php2shell.conf:ro
       - ./webroot:/var/www/html:ro
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://127.0.0.1/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
