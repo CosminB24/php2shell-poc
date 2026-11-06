@@ -1,6 +1,6 @@
 # php2shell PoC
 
-> **Lab use only — educational purposes only.**  
+> **Lab use only - educational purposes only.**  
 > This PoC is calibrated to the exact Docker lab in this repo and will not work on anything else by design. Do not run it against systems you don't own.
 
 A three-stage heap exploitation chain against `php:8.4.26-apache` (Debian 13 *trixie*, Apache prefork, mod_php). Two out-of-bounds `Set-Cookie` reads break ASLR, then a fake `HashTable` on a dangling session pointer turns session teardown into a `system()` call.
@@ -136,9 +136,9 @@ The vulnerable configuration is fixed in later patch levels.
 
 ## Files
 
-- `exploit.py` — the PoC, raw-socket HTTP only, standard library
-- `php.ini` — lab PHP config, don't touch
-- `apache.conf` — single-worker prefork MPM
-- `docker-compose.yml` + `Dockerfile` — the lab
-- `webroot/index.php` — the target page (just returns `OK`)
-- `docs/proof.png` — screenshot of a successful run
+- `exploit.py` - the PoC, raw-socket HTTP only, standard library
+- `php.ini` - lab PHP config, don't touch
+- `apache.conf` - single-worker prefork MPM
+- `docker-compose.yml` + `Dockerfile` - the lab
+- `webroot/index.php` - the target page (just returns `OK`)
+- `docs/proof.png` - screenshot of a successful run
